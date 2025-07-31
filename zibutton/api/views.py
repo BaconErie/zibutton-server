@@ -2,17 +2,9 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import viewsets, mixins
 from .models import List, Progress
-from .serializers import UserSerializer, ListSerializer, ProgressSerializer
+from .serializers import ListSerializer, ProgressSerializer
 from django.db.models import Q
-from .permissions import RestrictEditPermission, RestrictCreatePermission, UserPermission
-
-class UserViewSet(viewsets.GenericViewSet,
-                 mixins.RetrieveModelMixin,):
-    serializer_class = UserSerializer
-    permission_classes = [UserPermission]
-
-    def get_queryset(self):
-        return User.objects.filter(id=self.request.user.id)
+from .permissions import RestrictEditPermission, RestrictCreatePermission
 
 class ListViewSet(viewsets.GenericViewSet,
                mixins.CreateModelMixin,
