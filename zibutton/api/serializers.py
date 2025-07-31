@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from api.models import List, Progress
+from .models import List, Progress
 
 class ListSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
