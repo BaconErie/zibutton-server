@@ -1,10 +1,28 @@
+from django.contrib.auth.models import User
 from rest_framework import serializers
 from .models import List, Progress
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    lists = serializers.HyperlinkedRelatedField(many=True, queryset=List.objects.all(), view_name='list-detail')
+    
+    class Meta:
+        model = User
+        fields = ['url', 'id', 'username', 'lists']
+        extra_kwargs = {
+            'username': {'required': True, 'read_only': True},
+        }
 
 class ListSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = List
-        fields = ['url', 'id', 'name', 'language', 'created', 'updated', 'is_public', 'characters']
+        fields = ['url', 'id', 'name', 'owner', 'language', 'created', 'updated', 'is_public', 'characters']
+        extra_kwargs = {
+            'name': {'required': True},
+            'owner': {'read_only': True},
+            'language': {'read_only': True, 'required': True},
+            'created': {'read_only': True},
+        }
+
 
 class ProgressSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
