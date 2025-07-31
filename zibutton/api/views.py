@@ -7,8 +7,7 @@ from django.db.models import Q
 from .permissions import RestrictEditPermission, RestrictCreatePermission, UserPermission
 
 class UserViewSet(viewsets.GenericViewSet,
-                 mixins.RetrieveModelMixin,
-                 mixins.UpdateModelMixin):
+                 mixins.RetrieveModelMixin,):
     serializer_class = UserSerializer
     permission_classes = [UserPermission]
 
